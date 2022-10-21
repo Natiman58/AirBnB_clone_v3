@@ -67,7 +67,6 @@ test_db_storage.py'])
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
 
-
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
@@ -86,3 +85,31 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
         """Test that save properly saves objects to file.json"""
+
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     "not testing db storage")
+    def test_get(self):
+        """
+            Test the get method
+        """
+        test_state = State(name="New York")
+        new_state.save()
+        new_user = User(email="foo@bar.com", password="password")
+        new_user.save()
+        self.assertIS(new_state, models.storage.get("State", new_user.id))
+        self.assertIS(None, models.storage.get("state","rand_num"))
+        self.assertIS(None, models.storage.get("rand_word", "rand_num"))
+        self.assertIS(new_user, models.storage.get("User", new_user.id))
+
+    def test_count(self):
+        """
+            Test the count method
+        """
+        initial_count = models.storage.count()
+        self.assertEqual(models.storage.count("rand_word"), 0)
+        new_state = State(name="Florida")
+        new_state.save()
+        new_user = User(email="foo@bar.com", password="password")
+        new_user.save()
+        self.assertEqual(models.storage.count("State"), initial_count + 1)
+        self.assertEqual(models.storage.count(), initial_count + 2)
