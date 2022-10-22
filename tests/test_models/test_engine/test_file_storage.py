@@ -6,6 +6,7 @@ Contains the TestFileStorageDocs classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import file_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -23,6 +24,8 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
 
+@unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
+                     "not testing file storage")
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
     @classmethod
@@ -118,24 +121,18 @@ class TestFileStorage(unittest.TestCase):
                      "not testing file storage")
     def test_get(self):
         """
-            Tests the get method
+            Test the get method
         """
-        storage = FileStorage()
-        self.assertIS(storage.get("User", "rand_num"), None)
-        seff.assertIS(storage.get("rand_word", "rand_num"), None)
-        new_user = User()
-        new_user.save()
-        self.assertIS(storage.get("User", new_user.id), new_user)
+        dup = storage.get('User', self.user.id)
+        expected = self.user.id
+        actual = dup.id
+        self.assertEqual(expected, actual)
 
-    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
     def test_count(self):
-        storage = FileStorage()
-        initial_length = len(storage.all())
-        self.assertEqual(storage.count(), initial_length)
-        state_len = len(storage.all("State"))
-        self.assertEqual(storage.count("State"), state_len)
-        new_state = State()
-        new_state.save()
-        self.assertEqual(storage.count(), initial_length + 1)
-        self.assertEqual(storage.count("State"), state_len + 1)
+        """
+            Test the count method
+        """
+        all_obj = storage.count()
+        expected = 3
+        self.assertEqual(expected, all_obj)
+

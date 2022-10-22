@@ -6,6 +6,7 @@ Contains the TestDBStorageDocs and TestDBStorage classes
 from datetime import datetime
 import inspect
 import models
+from models import storage
 from models.engine import db_storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -14,6 +15,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
+from models.engine.db_storage import DBStorage
 import json
 import os
 import pep8
@@ -92,24 +94,15 @@ class TestFileStorage(unittest.TestCase):
         """
             Test the get method
         """
-        test_state = State(name="New York")
-        new_state.save()
-        new_user = User(email="foo@bar.com", password="password")
-        new_user.save()
-        self.assertIS(new_state, models.storage.get("State", new_user.id))
-        self.assertIS(None, models.storage.get("state","rand_num"))
-        self.assertIS(None, models.storage.get("rand_word", "rand_num"))
-        self.assertIS(new_user, models.storage.get("User", new_user.id))
+        dup = storage.get('State', self.state.id)
+        expected = self.user.id
+        actual = dup.id
+        self.assertEqual(expected, actual)
 
     def test_count(self):
         """
             Test the count method
         """
-        initial_count = models.storage.count()
-        self.assertEqual(models.storage.count("rand_word"), 0)
-        new_state = State(name="Florida")
-        new_state.save()
-        new_user = User(email="foo@bar.com", password="password")
-        new_user.save()
-        self.assertEqual(models.storage.count("State"), initial_count + 1)
-        self.assertEqual(models.storage.count(), initial_count + 2)
+        all_obj = storage.count()
+        expected = 3
+        self.assertEqual(expected, all_obj)
