@@ -7,6 +7,7 @@ from api.v1.views import app_views
 from flask import jsonify, request
 from models import storage
 
+
 @app_views.route('/status', methods=['GET'])
 def status():
     """
@@ -15,6 +16,7 @@ def status():
     if request.method == 'GET':
         response = {"status": "OK"}
         return jsonify(response)
+
 
 @app_views.route('/stats', methods=['GET'])
 def stats():
