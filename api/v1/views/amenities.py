@@ -42,8 +42,8 @@ def amenity_with_id_delete(amenity_id):
     return (jsonify({}))
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['POST'], strict_slashes=False)
-def amenity_post(amenity_id):
+@app_views.route('/amenities/', methods=['POST'], strict_slashes=False)
+def amenity_post():
     """
         creates an amenity with a specif Id
     """
