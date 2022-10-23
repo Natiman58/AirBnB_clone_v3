@@ -7,6 +7,7 @@ from models import storage
 from models.state import State
 from flask import Flask, request, make_response, jsonify, abort
 
+
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def states_with_no_id():
     """
@@ -17,7 +18,9 @@ def states_with_no_id():
         states.append(state.to_dict())
     return jsonify(states)
 
-@app_views.route('/states/<string:state_id>', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/states/<string:state_id>', methods=['GET'],
+                 strict_slashes=False)
 def states_with_id(state_id):
     """
         gets the state with a particular Id
@@ -28,7 +31,8 @@ def states_with_id(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.route('/states/<string:state_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def state_delete(state_id):
     """
         deletes a specific state
@@ -40,7 +44,9 @@ def state_delete(state_id):
     storage.save()
     return (jsonify({}))
 
-@app_views.route('/states/', methods=['POST'], strict_slashes=False)
+
+@app_views.route('/states/', methods=['POST'],
+                 strict_slashes=False)
 def state_post():
     """
         posts/creates new state
@@ -54,8 +60,8 @@ def state_post():
     return make_response(jsonify(state.to_dict()), 201)
 
 
-
-@app_views.route('/states/<string:state_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/states/<string:state_id>', methods=['PUT'],
+                 strict_slashes=False)
 def state_put(state_id):
     """
         handles to update a state with specifc id
@@ -70,4 +76,3 @@ def state_put(state_id):
             setattr(state, key, value)
     state.save()
     return jsonify(state.to_dict())
-
