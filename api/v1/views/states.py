@@ -33,9 +33,9 @@ def state_delete(state_id):
     """
         deletes a specific state
     """
-    if state_id is None:
+    state = storage.get("State", state_id)
+    if state is None:
         abort(404)
-    state = storage.all("State", state_id)
     state.delete()
     storage.save()
     return (jsonify({}))
@@ -58,7 +58,7 @@ def state_post():
 @app_views.route('/states/<string:state_id>', methods=['PUT'], strict_slashes=False)
 def state_put(state_id):
     """
-        handles to post a state with specifc id
+        handles to update a state with specifc id
     """
     state = storage.get("State", state_id)
     if state is None:
