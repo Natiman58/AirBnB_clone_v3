@@ -26,7 +26,7 @@ def amenity_get_with_id(amenity_id):
     amenity = storage.get("Amenity", amenity_id)
     if amenity is None:
         abort(404)
-    return(jsonify(amenity.to_dict()))
+    return jsonify(amenity.to_dict())
 
 
 @app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'], strict_slashes=False)
@@ -39,7 +39,7 @@ def amenity_with_id_delete(amenity_id):
         abort(404)
     amenity.delete()
     storage.save()
-    return (jsonify({}))
+    return jsonify({})
 
 
 @app_views.route('/amenities', methods=['POST'], strict_slashes=False)
