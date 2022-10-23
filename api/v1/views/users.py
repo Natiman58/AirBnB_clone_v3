@@ -5,7 +5,7 @@
 
 from flask import Flask, make_response, request, abort, jsonify
 from models import storage
-from models.amenity import User
+from models.user import User
 from api.v1.views import app_views
 
 
