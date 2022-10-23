@@ -18,7 +18,8 @@ def amenity_get():
         amenities.append(amenity.to_dict())
     return jsonify(amenities)
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
+                 strict_slashes=False)
 def amenity_get_with_id(amenity_id):
     """
         Gets an amenity with a specific ID
@@ -29,7 +30,8 @@ def amenity_get_with_id(amenity_id):
     return jsonify(amenity.to_dict())
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'], strict_slashes=False)
+@app_views.route('/amenities/<string:amenity_id>', methods=['DELETE'],
+                 strict_slashes=False)
 def amenity_with_id_delete(amenity_id):
     """
         deletes a specific amenity
@@ -42,7 +44,8 @@ def amenity_with_id_delete(amenity_id):
     return jsonify({})
 
 
-@app_views.route('/amenities', methods=['POST'], strict_slashes=False)
+@app_views.route('/amenities', methods=['POST'],
+                 strict_slashes=False)
 def amenity_post():
     """create a new amenity"""
     if not request.get_json():
@@ -54,7 +57,8 @@ def amenity_post():
     return make_response(jsonify(amenity.to_dict()), 201)
 
 
-@app_views.route('/amenities/<string:amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<string:amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def amenity_put(amenity_id):
     """
         updates an amenity obj
