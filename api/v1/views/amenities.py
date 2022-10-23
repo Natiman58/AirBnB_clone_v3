@@ -8,6 +8,7 @@ from models import storage
 from models.amenity import Amenity
 from api.v1.views import app_views
 
+
 @app_views.route('/amenities', methods=['GET'], strict_slashes=False)
 def amenity_get():
     """
@@ -17,6 +18,7 @@ def amenity_get():
     for amenity in storage.all("Amenity").values():
         amenities.append(amenity.to_dict())
     return jsonify(amenities)
+
 
 @app_views.route('/amenities/<string:amenity_id>', methods=['GET'],
                  strict_slashes=False)
