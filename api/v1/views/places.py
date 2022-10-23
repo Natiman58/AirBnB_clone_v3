@@ -52,7 +52,7 @@ def place_with_id_delete(place_id):
     return jsonify({})
 
 
-@app_views.route('/cities/<string:city_id/places>', methods=['POST'],
+@app_views.route('/cities/<string:city_id>/places', methods=['POST'],
                  strict_slashes=False)
 def place_post(city_id):
     """
