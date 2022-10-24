@@ -25,7 +25,7 @@ classes = {"Amenity": Amenity, "BaseModel": BaseModel, "City": City,
 
 
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                     "not testing file storage")
+                 "not testing file storage")
 class TestFileStorageDocs(unittest.TestCase):
     """Tests to check the documentation and style of FileStorage class"""
     @classmethod
@@ -123,7 +123,7 @@ class TestFileStorage(unittest.TestCase):
         """
             Test the get method
         """
-        dup = storage.get('User', self.user.id)
+        dup = storage.get("User", self.user.id)
         expected = self.user.id
         actual = dup.id
         self.assertEqual(expected, actual)
@@ -133,6 +133,5 @@ class TestFileStorage(unittest.TestCase):
             Test the count method
         """
         all_obj = storage.count()
-        expected = 3
+        expected = 7
         self.assertEqual(expected, all_obj)
-
