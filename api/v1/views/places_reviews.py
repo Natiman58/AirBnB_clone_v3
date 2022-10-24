@@ -43,6 +43,8 @@ def delete_review_with_id(review_id):
         deletes a review obj with a specifc ID
     """
     review = storage.get("Review", review_id)
+    if review is None:
+        abort(404)
     review.delete()
     storage.save()
     return jsonify({})
@@ -70,7 +72,7 @@ def post_review_with_id(place_id):
     json_req['place_id'] = place_id
     review = Review(**json_req)
     review.save()
-    return make_response(jsonify({review.to_dict()}), 201)
+    return make_response(jsonify(review.to_dict()), 201)
 
 
 @app_views.route('/reviews/<string:review_id>', methods=['PUT'],
@@ -84,7 +86,7 @@ def put_review_with_id(review_id):
         abort(404)
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    for key, value in request.get_json():
+    for key, value in request.get_json().items():
         if key not in ['id', 'user_id', 'place_id',
                        'created_at', 'updated_at']:
             setattr(review, key, value)
