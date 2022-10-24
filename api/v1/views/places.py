@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """
-    A module for the Place views
+    A module for creating new vew for Place obj
 """
 
-from cgitb import strong
 from flask import Flask, make_response, request, abort, jsonify
 from models import storage
 from models.place import Place
@@ -17,7 +16,7 @@ def places_get(city_id):
     """
         Gets all the places from a specifc city provided with ID
     """
-    city = storage.get("Cities", city_id)
+    city = storage.get("City", city_id)
     if city is None:
         abort(404)
     places = []
@@ -83,7 +82,7 @@ def place_put(place_id):
     """
         updates the place obj
     """
-    place = storage.get("User", place_id)
+    place = storage.get("Place", place_id)
     if place is None:
         abort(404)
     if not request.get_json():
