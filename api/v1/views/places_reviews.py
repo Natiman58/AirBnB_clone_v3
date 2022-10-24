@@ -57,14 +57,11 @@ def post_review_with_id(place_id):
     place = storage.get("Place", place_id)
     if place is None:
         abort(404)
-    
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
-    
     json_req = request.get_json()
     if 'user_id' not in json_req:
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
-    
     user = storage.get("User", json_req['user_id'])
     if user is None:
         abort(404)
@@ -88,7 +85,8 @@ def put_review_with_id(review_id):
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     for key, value in request.get_json():
-        if key not in ['id', 'user_id', 'place_id', 'created_at', 'updated_at']:
+        if key not in ['id', 'user_id', 'place_id',
+                       'created_at', 'updated_at']:
             setattr(review, key, value)
     review.save()
     return jsonify(review.to_dict())
